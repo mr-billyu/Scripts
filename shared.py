@@ -19,7 +19,8 @@ mount_point = args.mount_point
 print(remote_directory)
 print(mount_point)
 
-# Check if mount point exists.
+# Check if mount point exists. os.path.isdir() will return 'true' if
+# mount point exists.
 if os.path.isdir(mount_point):
     pass
 else:
@@ -33,7 +34,9 @@ cmd = cmd.split()
 try:
     results = subprocess.check_output(cmd)
 except subprocess.CalledProcessError:
-    # Mount point is empty.
+    # Mount point is empty so go ahead and mount remote_directory
+    # at mount_point in user space. An error during the mount process
+    # will cause and exception.
     cmd = 'sshfs ' + remote_directory + ' ' + mount_point
     cmd = cmd.split()
     try:
