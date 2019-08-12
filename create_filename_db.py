@@ -23,22 +23,28 @@ start_path = args.start_path
 db_name = args.db_name
 file_types = args.file_types
 
-print(start_path)
-print(db_name)
-print(file_types)
-
 # Reformat file_types to work with the 'find' command.
 # file_type of "jpg, img" need to be converted to
 # \( -name "*.jpg" -o -name "*.img" \)
 # to be in
-types = "\( "
+#types = "\( "
+types = ""
 index = 0
 extensions = file_types.split(',')
 for type in (extensions):
     if index > 0:
         types = types + "-o "
     index = index + 1
-    types = types + "-name \"*." + type + "\" "
-types = types + "\)"
-print(types)
+    types = types + "-name \'*." + type + "\' "
+#types = types + "\)"
 
+# Build and execute find command.
+cmd = 'find ' + start_path + " -type f  " + types + " > " + db_name
+#print(cmd)
+#cmd = cmd.split()
+#try:
+#    results = subprocess.check_output(cmd)
+#except subprocess.CalledProcessError:
+#    print("error")
+#os.system("find /home/pi/Compendium -type f  -name '*.jpg' -o -name '*. png' -o -name '*. img'  > test.db")
+os.system(cmd)
